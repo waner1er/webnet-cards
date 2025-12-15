@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeu de Cartes{% endblock %}
+
+{% block body %}
+<main>
+    <header>
+        <h1>Jeu de Cartes</h1>
+        <p>Tirez des cartes et découvrez l'ordre aléatoire de tri !</p>
+    </header>
+
+    <section>
+        <form method="post">
+            <label for="card_count">
+                <b>Combien de cartes voulez-vous tirer ?</b>
+                <small>Entre 1 et 52 cartes</small>
+            </label>
+            <input 
+                type="number" 
+                id="card_count" 
+                name="card_count" 
+                min="1" 
+                max="52" 
+                value="10"
+                required
+            >
+            <button type="submit">Tirer les cartes</button>
+        </form>
+
+        {% if error %}
+            <aside style="background-color: #ff6b6b; color: white; padding: 1rem; border-radius: 5px;">
+                <strong>Erreur :</strong> {{ error }}
+            </aside>
+        {% endif %}
+    </section>
+
+    {% if result %}
+        <hr>
+
+        {# Info cartes restantes #}
+        <section>
+            <aside>
+                <b>📦 Cartes restantes dans le paquet :</b> {{ result.remaining_cards }} / 52
+            </aside>
+        </section>
+
+        {# Ordres aléatoires générés #}
+        <section>
+            <h2>🎲 Ordres aléatoires générés</h2>
+            <details open>
+                <summary><b>🎨 Ordre des couleurs</b></summary>
+                <ol>
+                    {% for suit in result.suits_order %}
+                        <li><mark>{{ suit.label }}</mark></li>
+                    {% endfor %}
+                </ol>
+            </details>
+
+            <details open>
+                <summary><b>🔢 Ordre des valeurs</b></summary>
+                <p>
+                    {% for value in result.values_order %}
+                        <mark>{{ value.label }}</mark>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </details>
+        </section>
+
+        <hr>
+
+        {# Comparaison des mains #}
+        <section>
+            <h2>🃏 Vos cartes</h2>
+            
+            <article style="background-color: #fff3cd; border-left: 4px solid #ffc107;">
+                <header>
+                    <h3>Main non triée</h3>
+                    <small>Ordre de tirage du paquet mélangé</small>
+                </header>
+                <ol>
+                    {% for card in result.non_sorted %}
+                        <li><b>{{ card }}</b></li>
+                    {% endfor %}
+                </ol>
+            </article>
+
+            <article style="background-color: #d4edda; border-left: 4px solid #28a745;">
+                <header>
+                    <h3>✨ Main triée</h3>
+                    <small>Classée selon les ordres aléatoires ci-dessus</small>
+                </header>
+                <ol>
+                    {% for card in result.sorted %}
+                        <li><b>{{ card }}</b></li>
+                    {% endfor %}
+                </ol>
+            </article>
+        </section>
+
+        <section style="text-align: center;">
+            <a href="{{ path('card_game') }}" role="button">
+                🔄 Nouvelle partie
+            </a>
+        </section>
+    {% endif %}
+</main>
+{% endblock %}

@@ -33,16 +33,13 @@ class GameTestCommand extends Command
 
         $cardCount = (int) $input->getArgument('cards');
 
-        // Initialiser les dépendances
         $deck = new Deck();
         $sorter = new Sorter();
         $orderGenerator = new RandomOrderGenerator();
         $gameManager = new GameManager($deck, $sorter, $orderGenerator);
 
-        // Tirer les cartes
         $result = $gameManager->drawHand($cardCount);
 
-        // Afficher les résultats
         $io->title('Test du jeu de cartes');
 
         $io->section('Ordre aléatoire des couleurs');
