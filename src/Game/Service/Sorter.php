@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Game;
+declare(strict_types=1);
+
+namespace App\Game\Service;
+
+use App\Game\Card;
 
 class Sorter implements SorterInterface
 {

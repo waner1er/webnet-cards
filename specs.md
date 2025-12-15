@@ -34,4 +34,27 @@ convenu d’avance.
 - <b>Deck</b> : Paquet de 52 cartes, tirage aléatoire
 - <b>Hand</b> : Main d’un joueur
 - <b>Sorter</b> : Trie une main selon un ordre de couleurs et de valeurs
-  Enum Suit (couleurs) et CardValue (valeurs)
+- 2 Enums
+  - <b>Suit</b> (couleurs)
+  - <b>CardValue </b> (valeurs)
+
+<b>Services</b>
+
+- DeckFactory
+- GameManager
+
+### Etapes
+
+###### Initialisation du projet Symfony 7
+
+###### Enums pour couleurs et valeurs
+
+###### Class Card
+
+###### Class Deck
+
+###### Class Hand
+
+###### Class Sorter
+
+###### GameManager + GameController

@@ -23,19 +23,19 @@ enum CardValue: string
     public function label(): string
     {
         return match ($this) {
-            self::Two => 'Two',
-            self::Three => 'Three',
-            self::Four => 'Four',
-            self::Five => 'Five',
+            self::Two => 'Deux',
+            self::Three => 'Trois',
+            self::Four => 'Quatre',
+            self::Five => 'Cinq',
             self::Six => 'Six',
-            self::Seven => 'Seven',
-            self::Eight => 'Eight',
-            self::Nine => 'Nine',
-            self::Ten => 'Ten',
-            self::Jack => 'Jack',
-            self::Queen => 'Queen',
-            self::King => 'King',
-            self::Ace => 'Ace',
+            self::Seven => 'Sept',
+            self::Eight => 'Huit',
+            self::Nine => 'Neuf',
+            self::Ten => 'Dix',
+            self::Jack => 'Valet',
+            self::Queen => 'Dame',
+            self::King => 'Roi',
+            self::Ace => 'As',
         };
     }
 }
