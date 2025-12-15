@@ -8,7 +8,7 @@ enum Suit: string
 {
     case Hearts   = 'Coeurs';
     case Diamonds = 'Carreaux';
-    case Clubs    = 'Trèfles';
+    case Clubs    = 'Trefles';
     case Spades   = 'Piques';
 
     public function label(): string
@@ -16,7 +16,7 @@ enum Suit: string
         return match ($this) {
             self::Hearts => 'Coeurs',
             self::Diamonds => 'Carreaux',
-            self::Clubs => 'Trèfles',
+            self::Clubs => 'Trefles',
             self::Spades => 'Piques',
         };
     }

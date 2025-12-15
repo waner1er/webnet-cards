@@ -3,14 +3,14 @@
 {% block title %}Jeu de Cartes{% endblock %}
 
 {% block body %}
-<main>
-    <header>
+<main class="{{ result ? 'results-shown' : '' }}">
+    <header style="text-align: center;">
         <h1>Jeu de Cartes</h1>
         <p>Tirez des cartes et découvrez l'ordre aléatoire de tri !</p>
     </header>
 
-    <section>
-        <form method="post">
+    <section class="form-container">
+        <form method="post" class="game-form">
             <label for="card_count">
                 <b>Combien de cartes voulez-vous tirer ?</b>
                 <small>Entre 1 et 52 cartes</small>
@@ -24,82 +24,57 @@
                 value="10"
                 required
             >
-            <button type="submit">Tirer les cartes</button>
+            <button type="submit"> Tirer les cartes</button>
         </form>
 
         {% if error %}
-            <aside style="background-color: #ff6b6b; color: white; padding: 1rem; border-radius: 5px;">
+            <aside class="error-message">
                 <strong>Erreur :</strong> {{ error }}
             </aside>
         {% endif %}
     </section>
 
     {% if result %}
-        <hr>
-
-        {# Info cartes restantes #}
-        <section>
-            <aside>
-                <b>📦 Cartes restantes dans le paquet :</b> {{ result.remaining_cards }} / 52
-            </aside>
+    <div class="grid-two-columns">
+        <section class="game-section">
+            <h2>Main non triée ({{ result.non_sorted|length }} cartes)</h2>
+            <p>Ordre de tirage du paquet mélangé</p>
+            <div class="cards-grid">
+                {% for card in result.non_sorted %}
+                    {% set suit_class = card.getSuit().value|lower %}
+                    {% set suit_symbol = 'suit-' ~ card.getSuit().value|lower %}
+                    <div class="playing-card {{ suit_class }}">
+                        <div class="card-value">{{ card.getValue().label }}</div>
+                        <div class="card-suit">
+                            <span class="{{ suit_symbol }}"></span>
+                        </div>
+                        <div class="card-value" style="transform: rotate(180deg);">{{ card.getValue().label }}</div>
+                    </div>
+                {% endfor %}
+            </div>
         </section>
 
-        {# Ordres aléatoires générés #}
-        <section>
-            <h2>🎲 Ordres aléatoires générés</h2>
-            <details open>
-                <summary><b>🎨 Ordre des couleurs</b></summary>
-                <ol>
-                    {% for suit in result.suits_order %}
-                        <li><mark>{{ suit.label }}</mark></li>
-                    {% endfor %}
-                </ol>
-            </details>
-
-            <details open>
-                <summary><b>🔢 Ordre des valeurs</b></summary>
-                <p>
-                    {% for value in result.values_order %}
-                        <mark>{{ value.label }}</mark>{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </p>
-            </details>
+        <section class="game-section sorted">
+            <h2>✨ Main triée ({{ result.sorted|length }} cartes)</h2>
+            <p >Classée selon les règles aléatoires ci-dessus</p>
+            <div class="cards-grid">
+                {% for card in result.sorted %}
+                    {% set suit_class = card.getSuit().value|lower %}
+                    {% set suit_symbol = 'suit-' ~ card.getSuit().value|lower %}
+                    <div class="playing-card {{ suit_class }}">
+                        <div class="card-value">{{ card.getValue().label }}</div>
+                        <div class="card-suit">
+                            <span class="{{ suit_symbol }}"></span>
+                        </div>
+                        <div class="card-value" style="transform: rotate(180deg);">{{ card.getValue().label }}</div>
+                    </div>
+                {% endfor %}
+            </div>
         </section>
-
-        <hr>
-
-        {# Comparaison des mains #}
-        <section>
-            <h2>🃏 Vos cartes</h2>
-            
-            <article style="background-color: #fff3cd; border-left: 4px solid #ffc107;">
-                <header>
-                    <h3>Main non triée</h3>
-                    <small>Ordre de tirage du paquet mélangé</small>
-                </header>
-                <ol>
-                    {% for card in result.non_sorted %}
-                        <li><b>{{ card }}</b></li>
-                    {% endfor %}
-                </ol>
-            </article>
-
-            <article style="background-color: #d4edda; border-left: 4px solid #28a745;">
-                <header>
-                    <h3>✨ Main triée</h3>
-                    <small>Classée selon les ordres aléatoires ci-dessus</small>
-                </header>
-                <ol>
-                    {% for card in result.sorted %}
-                        <li><b>{{ card }}</b></li>
-                    {% endfor %}
-                </ol>
-            </article>
-        </section>
-
+</div>
         <section style="text-align: center;">
-            <a href="{{ path('card_game') }}" role="button">
-                🔄 Nouvelle partie
+            <a href="{{ path('card_game') }}" class="new-game-btn">
+                Nouvelle partie
             </a>
         </section>
     {% endif %}
