@@ -32,8 +32,8 @@ class GameManager
 
         $handCards = $this->deck->draw($count);
 
-        $suitsOrder = $customSuits ?? $this->randomOrderGenerator->generate(Suit::cases());
-        $valuesOrder = $customValues ?? $this->randomOrderGenerator->generate(CardValue::cases());
+        $suitsOrder = $customSuits ?? Suit::cases();
+        $valuesOrder = $customValues ?? CardValue::cases();
 
         $nonSortedHand = $handCards;
         $sortedHand = $this->sorter->sortHand([...$handCards], $suitsOrder, $valuesOrder);

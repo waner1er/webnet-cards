@@ -38,7 +38,6 @@
     <div class="grid-two-columns">
         <section class="game-section">
             <h2>Main non triée ({{ result.non_sorted|length }} cartes)</h2>
-            <p>Ordre de tirage du paquet mélangé</p>
             <div class="cards-grid">
                 {% for card in result.non_sorted %}
                     {% set suit_class = card.getSuit().value|lower %}
@@ -56,7 +55,6 @@
 
         <section class="game-section sorted">
             <h2>✨ Main triée ({{ result.sorted|length }} cartes)</h2>
-            <p >Classée selon les règles aléatoires ci-dessus</p>
             <div class="cards-grid">
                 {% for card in result.sorted %}
                     {% set suit_class = card.getSuit().value|lower %}

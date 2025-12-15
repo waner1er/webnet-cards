@@ -10,19 +10,31 @@ class Sorter implements SorterInterface
 {
     public function sortHand(array $hand, array $suitsOrder, array $valuesOrder): array
     {
-        $suitPriorityMap = array_flip(array_map(fn($suit) => $suit->value, $suitsOrder));
-        $valuePriorityMap = array_flip(array_map(fn($value) => $value->value, $valuesOrder));
+        usort($hand, function (Card $a, Card $b) use ($suitsOrder, $valuesOrder) {
+            $suitIndexA = $this->findIndex($a->getSuit(), $suitsOrder);
+            $suitIndexB = $this->findIndex($b->getSuit(), $suitsOrder);
 
-        usort($hand, function (Card $cardA, Card $cardB) use ($suitPriorityMap, $valuePriorityMap) {
-            $suitComparison = $suitPriorityMap[$cardA->getSuit()->value] - $suitPriorityMap[$cardB->getSuit()->value];
-
-            if ($suitComparison !== 0) {
-                return $suitComparison;
+            if ($suitIndexA !== $suitIndexB) {
+                return $suitIndexA <=> $suitIndexB;
             }
 
-            return $valuePriorityMap[$cardA->getValue()->value] - $valuePriorityMap[$cardB->getValue()->value];
+            $valueIndexA = $this->findIndex($a->getValue(), $valuesOrder);
+            $valueIndexB = $this->findIndex($b->getValue(), $valuesOrder);
+
+            return $valueIndexA <=> $valueIndexB;
         });
 
         return $hand;
+    }
+
+    private function findIndex(mixed $element, array $array): int
+    {
+        foreach ($array as $index => $item) {
+            if ($element === $item) {
+                return $index;
+            }
+        }
+
+        return PHP_INT_MAX;
     }
 }
