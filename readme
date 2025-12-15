@@ -65,7 +65,6 @@ php bin/console game:test 52
 -  Tirage aléatoire de 1 à 52 cartes
 -  Génération d'ordres de tri aléatoires (couleurs et valeurs)
 -  Affichage côte à côte : main non triée vs main triée
--  Personnalisation des règles de tri (drag & drop)
 -  Design responsive (mobile, tablette, desktop)
 -  Cartes stylisées avec symboles Unicode (♥ ♦ ♠ ♣)
 -  Gestion d'erreurs avec exceptions personnalisées
